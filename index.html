@@ -3,10 +3,17 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Super Agent</title>
+	<link rel="stylesheet" href="style/canvas.css">
 </head>
 <body>
-	
+	<canvas id="cvs1"></canvas>
 	<script src="./js/sceneMgr.js"></script>
 	<script src="./js/main.js"></script>
+	<script>
+		var canvas=document.getElementById('cvs1');
+		var ctx=canvas.getContext('2d');
+		ctx.fillStyle='#FF0000';
+		ctx.fillRect(0,0,80,100);
+	</script>
 </body>
 </html>
