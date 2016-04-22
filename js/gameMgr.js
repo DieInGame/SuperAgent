@@ -1,31 +1,34 @@
-let instance = null; 
+let instance_gm = null; 
 
 class GameManager{
-	constructor(){
-		
+	constructor(canvas){
+		this._canvas=canvas;
 		this._delay = 2;
 		
 		this._level = 0;
-		this._sceneMgr = null;
-		this._instance = null;
-		
+		this._sceneMgr = null;		
 		this._enemys   = new Array();
 		
 		//this.awake();
 		
 		// Singleton
-		if(!instance){
-			instance = this;
+		if(!instance_gm){
+			instance_gm = this;
 		}
-		return instance;
+		return instance_gm;
 	}
 	
 	
 	
 	// 确定必要参数准备
 	awake(){
+		if(!this._canvas) {
+			throw new Error("there is no more canvas");
+		}
 		if(!this._sceneMgr){
-			throw new Error("No SceneManager to build Scene");
+			// throw new Error("No SceneManager to build Scene");
+			window.console.log("create new SceneManager");
+			this._sceneMgr = new SceneManager(this._canvas);
 		}
 		
 		//  add 1 to level
