@@ -19,7 +19,7 @@
          context.fillStyle = color;
          switch (shape) {
              case "circle":
-                 context.arc(position.x,position.y,size.r,0,Math.PI*2,true);
+                 context.arc(position.x + size.r,position.y + size.r,size.r,0,Math.PI*2,true);
                  context.closePath();
                  context.fill();
                  break;

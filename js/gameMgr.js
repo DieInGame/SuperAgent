@@ -12,20 +12,26 @@ class GameManager{
 		
 		this.awake();
 		
+		this._time = new Date();
+		this._instance = null;
 		// Singleton
 		if(!instance_gm){
 			instance_gm = this;
-		}
+		}/*else if(instance_gm != this){
+			console.log("delete other instance");
+			delete(this);
+		}*/
+		
 		return instance_gm;
 	}
 	
-	// static getInstance(){
-	// 	if(!this._instance){
+	static getInstance(cvs){
+		if(!this._instance){
 			
-	// 		this._instance = new GameManager();
-	// 	}
-	// 	return this._instance;
-	// }
+			this._instance = new GameManager(cvs);
+		}
+		return this._instance;
+	}
 	
 	// 确定必要参数准备
 	awake(){
