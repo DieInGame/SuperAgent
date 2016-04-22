@@ -1,7 +1,8 @@
-// 
+let instance = null; 
+
 class GameManager{
 	constructor(){
-		// public
+		
 		this._delay = 2;
 		
 		this._level = 0;
@@ -10,16 +11,16 @@ class GameManager{
 		
 		this._enemys   = new Array();
 		
-		this.awake();
+		//this.awake();
+		
+		// Singleton
+		if(!instance){
+			instance = this;
+		}
+		return instance;
 	}
 	
-	static getInstance(){
-		if(!this._instance){
-			this._instance = this;
-		}else if(this._instance != this){
-			this._instance = new GameManager();
-		}
-	}
+	
 	
 	// 确定必要参数准备
 	awake(){
