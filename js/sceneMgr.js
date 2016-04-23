@@ -162,7 +162,7 @@ class SceneManager{
 		
 		// 检查是否无路可走
 		function isTrap(x,y){
-			if( maze[x-1][y] == 0 || maze[x][y+1] == 0 || maze[x+1][y] == 0 || maze[x][y-1] == 0 )
+			if( (maze[x-1] && maze[x-1][y] == 0) || (maze[x][y+1] == 0) || (maze[x+1] && maze[x+1][y] == 0) || maze[x][y-1] == 0 )
 			return false;
 			else return true;
 		}
