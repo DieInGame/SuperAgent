@@ -51,6 +51,7 @@ class GameManager{
 	}
 	start(){
 		this._sceneMgr.createScene();
+		
 	}
 	
 	update(){

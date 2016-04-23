@@ -6,6 +6,7 @@ class SceneManager{
 		this._agent = null;
 		this._unit  = {w:90,h:90};
 		// this._maze  = new Array();
+		this._mazethickness = 0.3; //用于控制地图的墙体密度
 		this._cvs   = canvas;
 		this._ctx   = canvas.getContext("2d");
 		this._renderer  = Renderer(this._cvs);
@@ -19,6 +20,7 @@ class SceneManager{
 	createScene(){
 		var row = Math.ceil(this._cvs.height/this._unit.h , 10);
 		var col = Math.ceil(this._cvs.width/this._unit.w , 10);
+		this._unit = {w:this._cvs.width/col,h:this._cvs.height/row};
 		var maze = new Array();
 		
 		for(let x = 0 ; x < col ; x++ ) {
@@ -49,8 +51,56 @@ class SceneManager{
 							
 			}
 		}
-		// console.log("maze",maze);
+		
 		this._maze = maze;
+		// 执行迷宫生成算法
+		this.DFS(this._maze);
+		// 清除迷宫可视化
+		window.setTimeout(()=>{
+			this._renderer.renderBackground();
+			this.buildMaze();
+		},1300);
+	}
+	
+	buildMaze(){
+		var maze = this._maze;
+		var col = maze.length;
+		var row = maze[0].length;
+		
+		for(let x = 0; x < col ; x++){
+			for(let y = 0; y< row ; y++){
+				switch (maze[x][y]){
+					// create wall by random
+					case 0:
+						if(Math.random() < this._mazethickness){
+							var wall = new Wall( this._unit.w , this._unit.h , this._cvs);
+							wall.setPosition(x*this._unit.w,y*this._unit.h);
+						}
+						break;
+					case 2:
+						var wall = new Wall( this._unit.w , this._unit.h , this._cvs);
+						wall.setPosition(x*this._unit.w,y*this._unit.h);
+						break;
+					// create Agent
+					case 3:
+						this._renderer.renderShape("rect","lightblue",{x:x*this._unit.w + 5,y:5 + y*this._unit.h},
+						{w:this._unit.w - 10,h: this._unit.h - 10});
+						break;
+					case 4:
+						this._renderer.renderShape("circle","orange",{x:x*this._unit.w + 5,y:5 + y*this._unit.h},
+						{r: (this._unit.h - 10) * 0.5});	
+						break;
+				}
+			}
+		}
+		
+		
+	}
+	
+	// 刷新地图
+	update(){
+		var img_data = this._ctx.getImageData(0,0,canvas.width, canvas.height);
+		this._ctx.putImageData(img_data);
 	}
 	
 	
@@ -63,13 +113,18 @@ class SceneManager{
 		return this._unit;
 	}
 	
+	// 获取迷宫标识
+	get maze(){
+		return this._maze;
+	}
 	
-	/* 
+	/* **********************************************************************
 	* 迷宫生成算法= - =之后可以单独出来
-	*/
+	*************************************************************************/
 	
-	// 深度优先生成算法
+	// 醉汉生成算法
 	DFS(maze = this._maze){
+		console.log("迷宫生成模式 ： 醉汉寻路法 深度优先搜索");
 		var col = maze.length;
 		var row = maze[0].length;
 		var start = {x:Math.floor(col/2),y:0};
@@ -77,9 +132,11 @@ class SceneManager{
 		var path  = new Array();
 		var impasse  = new Array();
 		var rd = this._renderer;
+		var u  = this._unit;
 		
-		findPath();
-		console.log(path,impasse);
+		var result = findPath();
+		
+		
 		// for(let x in path){
 		// 	this._renderer.renderShape("rect","green",{x:path[x].x*this._unit.w + 10,y:10 + path[x].y*this._unit.h},
 		// 			{w:this._unit.w - 20,h: this._unit.h - 20});
@@ -168,8 +225,8 @@ class SceneManager{
 		}
 		
 		function draw(color,x,y){
-			rd.renderShape("rect",color,{x:x*90 + 10,y:10 + y*90},
-					{w:70,h: 70});
+			rd.renderShape("rect",color,{x:x*u.w + 10,y:10 + y*u.h},
+					{w:u.w-20,h: u.h-20});
 		}
 	}
 	
