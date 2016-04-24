@@ -72,15 +72,13 @@ class SceneManager{
 				switch (maze[x][y]){
 					// create wall by random
 					case 0:
+					case 2:
 						if(Math.random() < this._mazethickness){
 							var wall = new Wall( this._unit.w , this._unit.h , this._cvs);
 							wall.setPosition(x*this._unit.w,y*this._unit.h);
 						}
 						break;
-					case 2:
-						var wall = new Wall( this._unit.w , this._unit.h , this._cvs);
-						wall.setPosition(x*this._unit.w,y*this._unit.h);
-						break;
+						
 					// create Agent
 					case 3:
 						this._renderer.renderShape("rect","lightblue",{x:x*this._unit.w + 5,y:5 + y*this._unit.h},
