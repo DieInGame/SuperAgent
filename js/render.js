@@ -1,10 +1,29 @@
 /*
 * 公有render方法
+* 使用类的共有属性Renderer.canvas 来实现共享canvas
 */ 
- function Renderer(canvas) {
-     var context    = canvas.getContext("2d");
-     var height     = canvas.height;
-     var width      = canvas.width;
+ function Renderer() {
+     var context    ;
+     var height     ;
+     var width      ;
+     
+    //  check canvas
+     if(!Renderer.canvas){
+         console.log("There is no canvas to render, call setCanvas()")
+     }else{
+         context    = Renderer.canvas.getContext("2d");
+         height     = Renderer.canvas.height;
+         width      = Renderer.canvas.width;
+     }
+     
+    
+     
+     function setCanvas(cvs) {
+         Renderer.canvas = cvs;
+         context    = Renderer.canvas.getContext("2d");
+         height     = Renderer.canvas.height;
+         width      = Renderer.canvas.width;
+     }
      
      function renderBackground(color='lightgoldenrodyellow') {
          context.beginPath();
@@ -47,6 +66,7 @@
      
      return {
          ctx: context,
+         setCanvas      : setCanvas,
          renderBackground : renderBackground,
          renderShape    : renderShape,
          renderSprite   : renderSprite

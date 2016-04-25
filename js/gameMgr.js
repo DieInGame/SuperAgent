@@ -1,3 +1,5 @@
+// GameManager
+
 let instance_gm = null; 
 
 class GameManager{
@@ -25,13 +27,7 @@ class GameManager{
 		return instance_gm;
 	}
 	
-	static getInstance(cvs){
-		if(!this._instance){
-			
-			this._instance = new GameManager(cvs);
-		}
-		return this._instance;
-	}
+
 	
 	// 确定必要参数准备
 	awake(){

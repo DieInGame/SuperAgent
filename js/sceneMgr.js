@@ -1,4 +1,6 @@
 // manager the scene 
+
+
 let instance_sm;
 
 class SceneManager{
