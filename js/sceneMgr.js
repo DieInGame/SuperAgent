@@ -11,7 +11,7 @@ class SceneManager{
 		this._mazethickness = 0.3; //用于控制地图的墙体密度
 		this._cvs   = canvas;
 		this._ctx   = canvas.getContext("2d");
-		this._renderer  = Renderer(this._cvs);
+		this._renderer  = new Renderer();
 		if(!instance_sm){
 			instance_sm = this;
 		}

@@ -9,7 +9,7 @@
      
     //  check canvas
      if(!Renderer.canvas){
-         console.log("There is no canvas to render, call setCanvas()")
+         console.log("There is no canvas to render, call setCanvas() and read the Renderer")
      }else{
          context    = Renderer.canvas.getContext("2d");
          height     = Renderer.canvas.height;

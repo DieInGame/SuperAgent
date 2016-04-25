@@ -1,56 +1,49 @@
 // GameManager
-
-let instance_gm = null; 
-
-class GameManager{
-	constructor(canvas){
-		this._canvas=canvas;
-		this._delay = 2;
-		this._instance = this;
-		
-		this._level = 0;
-		this._sceneMgr = null;		
-		this._enemys   = new Array();
-		
-		this.awake();
-		
-		this._time = new Date();
-		this._instance = null;
-		// Singleton
-		if(!instance_gm){
-			instance_gm = this;
-		}/*else if(instance_gm != this){
-			console.log("delete other instance");
-			delete(this);
-		}*/
-		
-		return instance_gm;
-	}
+function GameManager(canvas){
+	// public  variables & function
+	this.name = "GM1";
+	this.start= start;
 	
-
+	// private variable
+	var _canvas=canvas;
+	var _delay = 2;
+		
+	var _level = 0;
+	var _sceneMgr = null;		
+	var _enemys   = new Array();
+		
 	
-	// 确定必要参数准备
-	awake(){
-		if(!this._canvas) {
+	awake();
+	
+	function awake(){
+		if(!_canvas) {
 			throw new Error("there is no more canvas");
 		}
-		if(!this._sceneMgr){
+		if(!_sceneMgr){
 			// throw new Error("No SceneManager to build Scene");
 			window.console.log("create new SceneManager");
-			this._sceneMgr = new SceneManager(this._canvas);
+			_sceneMgr = new SceneManager( _canvas);
 		}
 		
 		//  add 1 to level
-		this._level ++;
+		_level ++;
 		
-		this.start();
+		start();
 	}
-	start(){
-		this._sceneMgr.createScene();
+	
+	function start(){
+		_sceneMgr.createScene();
 		
 	}
 	
-	update(){
+	function update(){
 		
 	}
+	
+	// Singleton
+	if(typeof GameManager.single_instance==="undefined"){  
+        GameManager.single_instance=this;//single_instance则是类属性，这个也可以实现单例，类属性和私有属性不同，类属性是类实例公用的   
+    }  
+	return GameManager.single_instance;
 }
+
