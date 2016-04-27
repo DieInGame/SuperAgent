@@ -60,6 +60,11 @@
          context.drawImage(sprite,position.x,position.y);
      }
      
+     function reRender(x,y,w,h) {
+         var img_data = context.getImageData(x,y,w,h);
+         context.putImageData(img_data,x,y);
+     }
+     
      function renderAnimation(params) {
          
      }
@@ -69,6 +74,7 @@
          setCanvas      : setCanvas,
          renderBackground : renderBackground,
          renderShape    : renderShape,
-         renderSprite   : renderSprite
+         renderSprite   : renderSprite,
+         reRender       : reRender
      };
  };

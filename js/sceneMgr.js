@@ -2,6 +2,10 @@
 function SceneManager(canvas){
 	// public
 	this.createScene = createScene;
+	this.update      = update;
+	this.setUnit	 = setUnit;
+	this.getUnit	 = getUnit;
+	this.getMaze	 = getMaze;
 	
 	// private
 	var _agent = null;

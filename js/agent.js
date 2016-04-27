@@ -1,35 +1,28 @@
-
-// 
-class Agent{
-	constructor(name){
-		this._name = name;
-		this._instance = this;
-		this._pathfind = null;
-		this._getfile  = false;
-	}
+// 玩家类
+function Agent(maze){
+	// public
 	
-	start(){
+	
+	// private
+	var _maze = maze;
+	var _pathfinder = null;
+	var _render = new Renderer();
+	
+	function start(){
 		
 	}
 	
-	update(){
+	function update(){
 		
 	}
 	
-	
-	// 获取实例
-	get instance(){
-		if(!this._instace){
-			this._instance = new Agent("auto");
-		}
-		return this._instace;
+	function setPathFinder(f){
+		_pathfinder = f;
 	}
 	
-	// 设置寻路方法
-	set pathfind(f){
-		this._pathfind = f;
-	} 
-	get pathfind(){
-		return this._pathfind;
+	if(typeof Agent.single_instance === "undefined"){
+		Agent.single_instance = this;
 	}
+	
+	return 
 }
