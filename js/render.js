@@ -6,6 +6,7 @@
      var context    ;
      var height     ;
      var width      ;
+     var origin_img_data;
      
     //  check canvas
      if(!Renderer.canvas){
@@ -60,16 +61,22 @@
          context.drawImage(sprite,position.x,position.y);
      }
      
-     function getImgSrc() {
+    // 脏矩绘图
+     function overRender(renderer,params) {
          
-     }
-     
-     function reRender(x=0,y=0,w=width,h=height,imgsrc) {
-         context.putImageData(imgsrc,0,0,x,y,w,h);
      }
      
      function renderAnimation(params) {
          
+     }
+     
+    //  封装imageData操作函数
+     function getImageData(x,y,w,h) {
+         var imgdata = context.getImageData(x,y,w,h);
+         return imgdata;
+     }
+     function putImageData(data,x,y) {
+         context.putImageData(data,x,y);
      }
      
      return {
@@ -78,6 +85,8 @@
          renderBackground : renderBackground,
          renderShape    : renderShape,
          renderSprite   : renderSprite,
-         reRender       : reRender
+         overRender       : overRender,
+         getImageData   : getImageData,
+         putImageData   : putImageData
      };
  };

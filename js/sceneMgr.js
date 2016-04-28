@@ -103,16 +103,13 @@ function SceneManager(canvas){
 		
 	}
 	
-	// 刷新地图
-	// 使用脏矩,动态刷新agent周围的
+	
 	function update(){
-		var ag_pos = _agent.getPosition();
-		var refresh_box = getUnit();
-		_renderer.reRender(0,0,_cvs.width,_cvs.height,_background_src);
+		
 	}
 	
 	function moveAgent(e) {
-		update();
+		
 		var touch = e.changedTouches[0];
 		var x = parseInt(touch.pageX / _unit.w , 10);
 		var y = parseInt(touch.pageY / _unit.h , 10);
