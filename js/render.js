@@ -60,9 +60,12 @@
          context.drawImage(sprite,position.x,position.y);
      }
      
-     function reRender(x,y,w,h) {
-         var img_data = context.getImageData(x,y,w,h);
-         context.putImageData(img_data,x,y);
+     function getImgSrc() {
+         
+     }
+     
+     function reRender(x=0,y=0,w=width,h=height,imgsrc) {
+         context.putImageData(imgsrc,0,0,x,y,w,h);
      }
      
      function renderAnimation(params) {

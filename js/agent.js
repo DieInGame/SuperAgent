@@ -5,6 +5,7 @@ function Agent(maze,unit){
 	
 	this.setPathFinder = setPathFinder;
 	this.setPosition = setPosition;
+	this.getPosition = getPosition;
 	this.setDestination = setDestination;
 	
 	// private
@@ -31,7 +32,7 @@ function Agent(maze,unit){
 		render();
 	}
 	
-	// 忘了排出相等
+	// 忘了排除相等
 	function move() {
 		if(_dest_pos.x > _grid_pos.x){
 			_grid_pos.x += 1/_speed;
@@ -44,9 +45,10 @@ function Agent(maze,unit){
 		} else if(_dest_pos.y < _grid_pos.y) {
 			 _grid_pos.y -= 1/_speed ;
 		}
+		
 		render();
 		if(_dest_pos != _grid_pos){
-			move();
+			window.setTimeout(move,100);
 		}
 		// _dest_pos.x > _grid_pos.x ? _grid_pos.x += _speed / _unit.w : _grid_pos.x -= _speed / _unit.w ;
 		// _dest_pos.y > _grid_pos.y ? _grid_pos.y += _speed / _unit.h : _grid_pos.y -= _speed / _unit.h ;
@@ -57,7 +59,7 @@ function Agent(maze,unit){
 		// path = _pathfinder(x,y);
 		_dest_pos = {x:x,y:y};
 		if(_dest_pos != _grid_pos){
-			window.setTimeout(move,1000);
+			move();
 		}
 	}
 	
@@ -66,8 +68,12 @@ function Agent(maze,unit){
 		_grid_pos.y = y;
 		render();
 	}
+	function getPosition() {
+		return _grid_pos;
+	}
 	
 	function render(){
+		// 绘制自己
 		_renderer.renderShape("rect","lightblue",{x:_grid_pos.x*_unit.w + 5,y:5 + _grid_pos.y*_unit.h},
 					{w:_unit.w - 10,h: _unit.h - 10});
 	}

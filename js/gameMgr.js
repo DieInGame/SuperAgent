@@ -32,9 +32,10 @@ function GameManager(canvas){
 	}
 	
 	function start(){
-		
+		// 创建场景
 		_sceneMgr.createScene();
-		
+		// 添加触控事件
+		_canvas.addEventListener("touchend",_sceneMgr.moveAgent);
 	}
 	
 	function update(){

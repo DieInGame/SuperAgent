@@ -2,6 +2,7 @@
 function SceneManager(canvas){
 	// public
 	this.createScene = createScene;
+	this.moveAgent   = moveAgent;
 	this.update      = update;
 	this.setUnit	 = setUnit;
 	this.getUnit	 = getUnit;
@@ -15,6 +16,7 @@ function SceneManager(canvas){
 	var _cvs   = canvas;
 	var _ctx   = canvas.getContext("2d");
 	var _renderer  = new Renderer();
+	var _background_src;
 	
 	function createScene(){
 		var row = Math.ceil(_cvs.height/_unit.h , 10);
@@ -60,15 +62,16 @@ function SceneManager(canvas){
 			_renderer.renderBackground();
 			buildMaze();
 		},1300);
-		// 添加触控事件
-		_cvs.addEventListener("touchend",moveAgent);
+		
 	}	
 	
 	function buildMaze() {
 		var maze = _maze;
 		var col = maze.length;
 		var row = maze[0].length;
+		var ag_pos;
 		
+		// 建立 迷宫，并不绘制特工，需要保存背景图像数据
 		for(let x = 0; x < col ; x++){
 			for(let y = 0; y< row ; y++){
 				switch (maze[x][y]){
@@ -83,8 +86,7 @@ function SceneManager(canvas){
 						
 					// create Agent
 					case 3:
-						_agent = new Agent(_maze , _unit);
-						_agent.setPosition(x,y);
+						ag_pos = {x:x,y:y};
 						break;
 					case 4:
 						_renderer.renderShape("circle","orange",{x:x*_unit.w + 5,y:5 + y*_unit.h},
@@ -93,15 +95,24 @@ function SceneManager(canvas){
 				}
 			}
 		}
-	}
-	
-	// 刷新地图
-	// 使用脏矩
-	function update(){
+		_background_src = _ctx.getImageData(0,0,_cvs.width,_cvs.height);
+		
+		// 绘制人物
+		_agent = new Agent(_maze , _unit);
+		_agent.setPosition(ag_pos.x,ag_pos.y);
 		
 	}
 	
+	// 刷新地图
+	// 使用脏矩,动态刷新agent周围的
+	function update(){
+		var ag_pos = _agent.getPosition();
+		var refresh_box = getUnit();
+		_renderer.reRender(0,0,_cvs.width,_cvs.height,_background_src);
+	}
+	
 	function moveAgent(e) {
+		update();
 		var touch = e.changedTouches[0];
 		var x = parseInt(touch.pageX / _unit.w , 10);
 		var y = parseInt(touch.pageY / _unit.h , 10);
