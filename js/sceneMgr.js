@@ -10,6 +10,7 @@ function SceneManager(canvas){
 	// private
 	var _agent = null;
 	var _unit  = {w:90,h:90};
+	var _maze;
 	var _mazethickness = 0.3; //用于控制地图的墙体密度
 	var _cvs   = canvas;
 	var _ctx   = canvas.getContext("2d");
@@ -23,6 +24,7 @@ function SceneManager(canvas){
 		
 		for(let x = 0 ; x < col ; x++ ) {
 			maze[x] = new Array();
+			// 初始化场景
 			for(let y = 0 ; y < row ; y++) {
 				// 标记 0 空，1 路径，2 死点，3 起点，4 终点
 				if(x == parseInt(col/2,10) && y == 0){
@@ -52,13 +54,14 @@ function SceneManager(canvas){
 		
 		_maze = maze;
 		// 执行迷宫生成算法
-		DFS(_maze,_unit);
+		_maze = DFS(_maze,_unit);
 		// 清除迷宫可视化
 		window.setTimeout(()=>{
 			_renderer.renderBackground();
 			buildMaze();
 		},1300);
-		
+		// 添加触控事件
+		_cvs.addEventListener("touchend",moveAgent);
 	}	
 	
 	function buildMaze() {
@@ -80,8 +83,8 @@ function SceneManager(canvas){
 						
 					// create Agent
 					case 3:
-						_renderer.renderShape("rect","lightblue",{x:x*_unit.w + 5,y:5 + y*_unit.h},
-						{w:_unit.w - 10,h: _unit.h - 10});
+						_agent = new Agent(_maze , _unit);
+						_agent.setPosition(x,y);
 						break;
 					case 4:
 						_renderer.renderShape("circle","orange",{x:x*_unit.w + 5,y:5 + y*_unit.h},
@@ -98,6 +101,13 @@ function SceneManager(canvas){
 		
 	}
 	
+	function moveAgent(e) {
+		var touch = e.changedTouches[0];
+		var x = parseInt(touch.pageX / _unit.w , 10);
+		var y = parseInt(touch.pageY / _unit.h , 10);
+		_agent.setDestination(x,y);
+		
+	}
 	
 	// 设置基本单位
 	function setUnit({x,y}){

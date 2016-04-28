@@ -32,6 +32,7 @@ function GameManager(canvas){
 	}
 	
 	function start(){
+		
 		_sceneMgr.createScene();
 		
 	}

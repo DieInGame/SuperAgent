@@ -16,7 +16,7 @@ function DFS(maze,unit){
 	var u  = unit;
     
 	var result = findPath();
-	
+	return maze;
 	
 	// 生成路径
 	function findPath(){
