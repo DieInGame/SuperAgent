@@ -7,6 +7,8 @@ function SceneManager(canvas){
 	this.setUnit	 = setUnit;
 	this.getUnit	 = getUnit;
 	this.getMaze	 = getMaze;
+	this.isArrived   = isArrived;
+	this.destoryAgent= destoryAgent;
 	
 	// private
 	var _agent = null;
@@ -129,6 +131,22 @@ function SceneManager(canvas){
 	// 获取迷宫标识
 	function getMaze(){
 		return _maze;
+	}
+	
+	// 检测是否到达终点
+	function isArrived() {
+		if(_agent != null ){
+			var ag_pos = _agent.getPosition();
+			var col = Math.round(ag_pos.x);
+			var row = Math.round(ag_pos.y);
+			
+			return (_maze[col][row] === 4);
+		}
+	}
+	
+	function destoryAgent() {
+		// Agent.delete(single_instance);
+		_agent = null;
 	}
 	
 	// Singleton

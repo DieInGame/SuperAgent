@@ -27,10 +27,6 @@ function Agent(maze,unit){
 
 	}
 	
-	function update(){
-		move();
-		render();
-	}
 	
 	// 忘了排除相等
 	function move() {
@@ -59,6 +55,7 @@ function Agent(maze,unit){
 		// path = _pathfinder(x,y);
 		_dest_pos = {x:x,y:y};
 		if(_dest_pos != _grid_pos){
+			
 			move();
 		}
 	}
@@ -90,9 +87,12 @@ function Agent(maze,unit){
 					{w:_unit.w - 10,h: _unit.h - 10});
 	}
 	
+	
+	// 设定寻路方法
 	function setPathFinder(f){
 		_pathfinder = f;
 	}
+	
 	
 	if(typeof Agent.single_instance === "undefined"){
 		Agent.single_instance = this;

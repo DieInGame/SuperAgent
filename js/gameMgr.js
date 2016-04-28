@@ -3,7 +3,7 @@ function GameManager(canvas){
 	// public  variables & function
 	this.name = "GM1";
 	this.start= start;
-	
+	this.level= getLevel() ;
 	// private variable
 	var _canvas=canvas;
 	var _delay = 2;
@@ -36,10 +36,29 @@ function GameManager(canvas){
 		_sceneMgr.createScene();
 		// 添加触控事件
 		_canvas.addEventListener("touchend",_sceneMgr.moveAgent);
+		
+		update();
 	}
 	
 	function update(){
+		window.setInterval(()=>{
+			if(_sceneMgr.isArrived() === true){
+				window.clearInterval();
+				console.log("You Win");
+				restart();
+			}
+		},800);
+	}
+	
+	function restart() {
+		_sceneMgr.destoryAgent();
 		
+		_sceneMgr.createScene();
+		_level ++;
+	}
+	
+	function getLevel() {
+		return _level;
 	}
 	
 	// Singleton
